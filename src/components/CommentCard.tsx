@@ -1,5 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { Comment } from "../types/Comment";
 
 type Props = {
@@ -9,8 +14,20 @@ type Props = {
 export default function CommentCard({ comment }: Props) {
   return (
     <View style={styles.card}>
-      <Text style={styles.name}>{comment.name}</Text>
-      <Text style={styles.email}>{comment.email}</Text>
+      <View style={styles.userRow}>
+      <Image
+  source={{
+    uri: `https://api.dicebear.com/9.x/initials/png?seed=${encodeURIComponent(comment.name)}&backgroundColor=CBD5E1&textColor=334155`,
+  }}
+  style={styles.avatar}
+/>
+
+        <View>
+          <Text style={styles.name}>{comment.name}</Text>
+          <Text style={styles.email}>{comment.email}</Text>
+        </View>
+      </View>
+
       <Text style={styles.body}>{comment.body}</Text>
     </View>
   );
@@ -18,22 +35,39 @@ export default function CommentCard({ comment }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     padding: 14,
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     elevation: 2,
   },
+
+  userRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
   name: {
-    fontWeight: "bold",
     fontSize: 16,
+    fontWeight: "bold",
+    color: "#1E3A8A",
   },
+
   email: {
-    color: "#777",
-    marginBottom: 6,
+    color: "#666",
+    fontSize: 13,
   },
+
   body: {
-    fontSize: 14,
-    color: "#333",
+    color: "#444",
+    lineHeight: 20,
   },
 });
