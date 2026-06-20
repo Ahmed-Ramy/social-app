@@ -37,51 +37,38 @@ export default function PostDetailsScreen({ route }: any) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.postCard}>
-        <View style={styles.userRow}>
-        <Image
-  source={{
-    uri: `https://api.dicebear.com/9.x/initials/png?seed=User ${post.user_id}&backgroundColor=CBD5E1&textColor=334155`,
-  }}
-  style={styles.avatar}
-/>
-
-          <Text style={styles.userName}>
-            User {post.user_id}
-          </Text>
-        </View>
-
-        <Text style={styles.title}>{post.title}</Text>
-
-        <Text style={styles.body}>
-          {post.body}
-        </Text>
-      </View>
-
-      <Text style={styles.commentsHeader}>
-       Comments
-      </Text>
-
-      <FlatList
-        data={comments}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingBottom: 20 }}
-        renderItem={({ item }) => (
-          <CommentCard comment={item} />
-        )}
-      />
-    </View>
+    <FlatList
+      style={styles.container}
+      data={comments}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <CommentCard comment={item} />}
+      contentContainerStyle={styles.listContent}
+      ListHeaderComponent={
+        <>
+          <View style={styles.postCard}>
+            <View style={styles.userRow}>
+              <Image
+                source={{
+                  uri: `https://api.dicebear.com/9.x/initials/png?seed=User ${post.user_id}&backgroundColor=CBD5E1&textColor=334155`,
+                }}
+                style={styles.avatar}
+              />
+  
+              <Text style={styles.userName}>User {post.user_id}</Text>
+            </View>
+  
+            <Text style={styles.title}>{post.title}</Text>
+            <Text style={styles.body}>{post.body}</Text>
+          </View>
+  
+          <Text style={styles.commentsHeader}>Comments</Text>
+        </>
+      }
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#EEF2FF",
-    padding: 16,
-  },
-
   center: {
     flex: 1,
     justifyContent: "center",
@@ -133,5 +120,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1E3A8A",
     marginBottom: 12,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#EEF2FF",
+  },
+  
+  listContent: {
+    padding: 16,
+    paddingBottom: 20,
   },
 });

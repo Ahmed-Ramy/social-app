@@ -24,7 +24,6 @@ export default function CommentCard({ comment }: Props) {
 
         <View>
           <Text style={styles.name}>{comment.name}</Text>
-          <Text style={styles.email}>{comment.email}</Text>
         </View>
       </View>
 
