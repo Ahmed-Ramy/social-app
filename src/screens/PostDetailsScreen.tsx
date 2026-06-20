@@ -13,7 +13,7 @@ import CommentCard from "../components/CommentCard";
 import { Comment } from "../types/Comment";
 
 export default function PostDetailsScreen({ route }: any) {
-  const { post } = route.params;
+  const { post, userName } = route.params;
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,18 +49,20 @@ export default function PostDetailsScreen({ route }: any) {
             <View style={styles.userRow}>
               <Image
                 source={{
-                  uri: `https://api.dicebear.com/9.x/initials/png?seed=User ${post.user_id}&backgroundColor=CBD5E1&textColor=334155`,
+                  uri: `https://api.dicebear.com/9.x/initials/png?seed=${encodeURIComponent(
+                    userName
+                  )}&backgroundColor=EEF2FF&textColor=4F46E5`,
                 }}
                 style={styles.avatar}
               />
-  
-              <Text style={styles.userName}>User {post.user_id}</Text>
+
+              <Text style={styles.userName}>{userName}</Text>
             </View>
-  
+
             <Text style={styles.title}>{post.title}</Text>
             <Text style={styles.body}>{post.body}</Text>
           </View>
-  
+
           <Text style={styles.commentsHeader}>Comments</Text>
         </>
       }
@@ -73,14 +75,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#F8FAFC",
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#F8FAFC",
+  },
+
+  listContent: {
+    padding: 16,
+    paddingBottom: 20,
   },
 
   postCard: {
     backgroundColor: "#FFFFFF",
     padding: 18,
-    borderRadius: 16,
+    borderRadius: 18,
     marginBottom: 20,
-    elevation: 4,
+
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+
+    elevation: 3,
   },
 
   userRow: {
@@ -98,37 +117,27 @@ const styles = StyleSheet.create({
 
   userName: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#1E3A8A",
+    fontWeight: "700",
+    color: "#4F46E5",
   },
 
   title: {
     fontSize: 24,
-    fontWeight: "bold",
-    color: "#1E3A8A",
+    fontWeight: "700",
+    color: "#0F172A",
     marginBottom: 12,
   },
 
   body: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#444",
+    color: "#1F2937",
   },
 
   commentsHeader: {
     fontSize: 22,
-    fontWeight: "bold",
-    color: "#1E3A8A",
+    fontWeight: "700",
+    color: "#0F172A",
     marginBottom: 12,
-  },
-
-  container: {
-    flex: 1,
-    backgroundColor: "#EEF2FF",
-  },
-  
-  listContent: {
-    padding: 16,
-    paddingBottom: 20,
   },
 });

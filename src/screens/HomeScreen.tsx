@@ -7,18 +7,30 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { getPosts } from "../services/gorestService";
+import { getPosts, getUserById } from "../services/gorestService";
 import PostCard from "../components/PostCard";
 import { Post } from "../types/Post";
 
 export default function HomeScreen({ navigation }: any) {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadPosts() {
-      const data = await getPosts();
-      setPosts(data);
+      const postsData = await getPosts();
+
+      const postsWithUsers = await Promise.all(
+        postsData.map(async (post: Post) => {
+          const user = await getUserById(post.user_id);
+
+          return {
+            ...post,
+            userName: user.name || `User ${post.user_id}`,
+          };
+        })
+      );
+
+      setPosts(postsWithUsers);
       setLoading(false);
     }
 
@@ -35,22 +47,22 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Social Feed</Text>
-
+   
       <FlatList
         data={posts}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
-            <PostCard
-  post={item}
-  userName={`User ${item.user_id}`}
-  onPress={() =>
-    navigation.navigate("PostDetails", {
-      post: item,
-    })
-  }
-/>
+          <PostCard
+            post={item}
+            userName={item.userName}
+            onPress={() =>
+              navigation.navigate("Post Details", {
+                post: item,
+                userName: item.userName,
+              })
+            }
+          />
         )}
       />
     </View>
@@ -60,7 +72,7 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EEF2FF",
+    backgroundColor: "#F8FAFC",
     padding: 16,
   },
 
@@ -70,11 +82,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  header: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "#1E3A8A",
-    marginBottom: 20,
-    marginTop: 10,
-  },
 });

@@ -15,7 +15,7 @@ export default function AppNavigator() {
           component={HomeScreen}
         />
         <Stack.Screen
-          name="PostDetails"
+          name="Post Details"
           component={PostDetailsScreen}
         />
       </Stack.Navigator>

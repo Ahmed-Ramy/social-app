@@ -17,7 +17,7 @@ export default function CommentCard({ comment }: Props) {
       <View style={styles.userRow}>
       <Image
   source={{
-    uri: `https://api.dicebear.com/9.x/initials/png?seed=${encodeURIComponent(comment.name)}&backgroundColor=CBD5E1&textColor=334155`,
+    uri: `https://api.dicebear.com/9.x/initials/png?seed=${encodeURIComponent(comment.name)}&backgroundColor=EEF2FF&textColor=4F46E5`,
   }}
   style={styles.avatar}
 />
@@ -36,15 +36,21 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
     padding: 14,
-    marginBottom: 10,
-    borderRadius: 12,
+    marginBottom: 12,
+    borderRadius: 16,
+
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+
     elevation: 2,
   },
 
   userRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 10,
   },
 
   avatar: {
@@ -56,17 +62,18 @@ const styles = StyleSheet.create({
 
   name: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#1E3A8A",
+    fontWeight: "700",
+    color: "#4F46E5",
   },
 
   email: {
-    color: "#666",
+    color: "#64748B",
     fontSize: 13,
   },
 
   body: {
-    color: "#444",
-    lineHeight: 20,
-  },
+    fontSize: 15,
+    lineHeight: 22,
+    color: "#1F2937",
+  }
 });
